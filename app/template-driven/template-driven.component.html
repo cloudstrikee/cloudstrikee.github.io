@@ -1,0 +1,50 @@
+<h1>Template Driven</h1>
+
+<!--Con esto lo que hacemos es que el form que crea angular oculto
+    estamos asignando el resultado lo que obtuvo a una variable local
+    y eso lo pasamos al submit, para asi poder usar los datos-->
+
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <!--Con esto lo que hacemos es agrupar los campos para poder tomar sus datos como un objeto y despues separarlos a el gusto-->
+  <div ngModelGroup="userData">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text"
+             class="form-control"
+             id="username"
+             [(ngModel)]="user.username"
+             name="username"
+             required>
+      <!--Agregando ngModel name="(name)"> Angular 2 puede tomar el control de este campo del formulario-->
+    </div>
+    <div class="form-group">
+      <label for="email">E-Mail</label>
+      <!--Con el ngModel hacemos que este campo sea reconocido por angular 2
+        si le agregamos brackets podemos poner valores por default del ts component
+        si agregamos tambien parentesis hacemos que los datos se vean reflejados en nuestro component.ts  -->
+      <input type="text"
+             class="form-control"
+             id="email"
+             [(ngModel)]="user.email"
+             name="email"
+             required
+             pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password"
+           class="form-control"
+           id="password"
+           [(ngModel)]="user.password"
+           name="password"
+           required>
+  </div>
+  <div class="radio">
+    <label>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+

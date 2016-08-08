@@ -1,0 +1,68 @@
+<h1>Data Driven</h1>
+<!--Con esto le digo a angular que se
+sincronize con el form que cree con typescrip
+y que tiene el mismo nombre-->
+<!--Aparte agregamos el evento ngSubmit y el metodo onSubmit para recopilar datos etc
+  y poder activar algun metodo para usarlos o algo por el estilo
+  y activa el boton submit de abajo-->
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="userData">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text"
+             class="form-control"
+             id="username"
+             formControlName="username">
+      <!--formcontrolname="(name)" con esto enlazamos este campo a la propiedad
+      de nuestro custom form-->
+      <!--Con esto agrego Mensajes de validacion para que le aparezcan al usuario-->
+      <!--Y lo hago usando el path hacia el grupo que hice de campos-->
+      <div *ngIf="!myForm.find(['userData','username']).valid" class="alert alert-danger">
+        This Field is Required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">E-Mail</label>
+      <input type="text"
+             class="form-control"
+             id="email"
+             formControlName="email">
+      <div *ngIf="!myForm.find(['userData','email']).valid" class="alert alert-danger">
+        - The email is Invalid.
+        - And this Field is Required.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password"
+           class="form-control"
+           id="password"
+           formControlName="password">
+    <div *ngIf="!myForm.find('password').valid" class="alert alert-danger">
+      This Field is Required
+    </div>
+  </div>
+
+  <div class="radio" *ngFor="let gen of genders">
+    <label>
+      <input type="radio"
+        formControlName="gender"
+        [value]="gen">
+      {{gen}}
+    </label>
+  </div>
+
+  <div formArrayName="hobbies">
+    <h3>Hobbies</h3>
+    <div class="form-group" *ngFor="let hobby of myForm.find('hobbies').controls;let i = index">
+      <input type="text"
+             class="form-control" formControlName="{{i}}">
+    </div>
+  </div>
+  <button type="button" class="btn btn-default" (click)="onAddHobby()">Add Hobby</button>
+  <!--Con esto verifico si el Form tiene valores validos y si si entonces activa el boton,
+  si no pues esta desactivado-->
+  <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+</form>
